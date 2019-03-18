@@ -21,4 +21,7 @@ def create_app(test_config=None):
     except OSError:
         pass
 
+    from .route.admin import admin_bp
+    app.register_blueprint(admin_bp)
+
     return app
