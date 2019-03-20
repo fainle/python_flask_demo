@@ -41,20 +41,21 @@
             //   });
             //监听提交
             form.on('submit(login)', function (data) {
-                // alert(888)
-//                layer.msg(JSON.stringify(data.field),function(){
-//                    location.href='index.html'
-//                });
-//
-                $.ajax({
-                    type: 'POST',
+                var request = $.ajax({
                     url: "{{ url_for('admin_bp.admin_login') }}",
+                    type: "POST",
                     data: data.field,
-                    dataType: "json",
-                    success: function (data) {
-                        layer.msg(data);
-                    }
+                    dataType: "json"
                 });
+
+                request.done(function (msg) {
+                    window.location.href=msg.url;
+                });
+
+                request.fail(function (jqXHR, textStatus) {
+                    alert("Request failed: " + textStatus);
+                });
+
                 return false;
             });
         });

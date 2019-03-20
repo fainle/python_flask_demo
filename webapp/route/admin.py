@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from flask import Blueprint, render_template, request, session, redirect, url_for
+from flask import Blueprint, render_template, request, session, redirect, url_for, jsonify
 
 admin_bp = Blueprint('admin_bp', __name__)
 
@@ -12,13 +12,12 @@ def admin_index():
     return render_template('layout/base_iframe.html', next=next)
 
 
-@admin_bp.route('/admin/login', methods=['get', 'post'])
+@admin_bp.route('/admin/login', methods=['GET', 'POST'])
 def admin_login():
-    if request.method == 'post':
+    if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
         error = None
-
         data = dict()
 
         if error is None:
@@ -30,6 +29,7 @@ def admin_login():
             data['status_code'] = 0
             data['msg'] = error
 
+        return jsonify(data)
     return render_template('admin/login.html')
 
 
